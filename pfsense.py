@@ -39,13 +39,6 @@ class PfSenseString(PfSenseNode):
     def __call__(self, content):
         self.string = str(content)
 
-    def __coerce__(self, other):
-        if isinstance(other, str):
-            return self.string, other
-        elif isinstance(other, PfSenseString):
-            return self.string, other.string
-        return self, other
-
     @property
     def data(self):
         return self.string
@@ -56,13 +49,6 @@ class PfSenseInteger(PfSenseNode):
 
     def __call__(self, content):
         self.integer = int(content)
-
-    def __coerce__(self, other):
-        if isinstance(other, int):
-            return self.integer, other
-        elif isinstance(other, PfSenseInteger):
-            return self.integer, other.integer
-        return self, other
 
     @property
     def data(self):
