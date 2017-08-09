@@ -87,14 +87,14 @@ class PfSenseFilterAlias(PfSenseString):
     def data(self):
         data = super().data
         for interface_name, interface_data in self.rootdoc.pfsense.interfaces.data.items():
-            alias_name = self.string
+            alias_name = data
             if alias_name.endswith('ip'):
                 alias_name = alias_name[:-2]
             if interface_name == alias_name:
-                interface_data['name'] = self.string
+                interface_data['name'] = data
                 return {'interface': interface_data}
         for alias in self.rootdoc.pfsense.aliases.alias:
-            if alias.name.string == self.string:
+            if alias.name.string == data:
                 return {'alias': alias.data}
         return data
 
