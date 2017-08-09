@@ -18,6 +18,9 @@ OUTPUT_FORMATS = {
     'md': output_markdown,
 }
 
+def get_output_func(args):
+    return OUTPUT_FORMATS.get(args.output_format, output_yaml)
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", dest="input_path", help="XML input path")
@@ -48,8 +51,9 @@ def step_file(args, doc, output_func):
 def main():
     args = parse_args()
     doc = PfSenseDocument()
+    output_func = get_output_func(args)
+
     step_parse(args, doc)
-    output_func = OUTPUT_FORMATS.get(args.output_format, output_yaml)
     if args.output_path == '-':
         step_stdout(args, doc, output_func)
     else:
