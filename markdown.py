@@ -1,7 +1,14 @@
 #!/usr/bin/env python3
-from pfsense import PfSenseFilterAlias, PfSenseFilterLocation
+from pfsense import PfSenseFilterInterface, PfSenseFilterAlias, PfSenseFilterLocation
 from util import dict_to_list, obj_to_dict, obj_to_list
 
+
+def format_filter_interface(filter_interface):
+    if isinstance(filter_interface, list):
+        filter_interface = ', '.join(map(format_filter_interface, filter_interface))
+    elif isinstance(filter_interface, dict):
+        filter_interface = '[{name}](#interfaces "{descr}")'.format(**filter_interface['interface'])
+    return filter_interface
 
 def format_filter_alias(filter_alias):
     if isinstance(filter_alias, dict):
@@ -17,7 +24,9 @@ def format_filter_location(filter_location):
     return str(filter_location)
 
 def format_markdown_cell(cell):
-    if isinstance(cell, PfSenseFilterLocation):
+    if isinstance(cell, PfSenseFilterInterface):
+        cell = format_filter_interface(cell.data)
+    elif isinstance(cell, PfSenseFilterLocation):
         data = ''
         if hasattr(cell, 'any'):
             data += 'any'

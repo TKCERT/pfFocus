@@ -82,6 +82,23 @@ class PfSenseChange(PfSenseNode):
     _time = PfSenseTimestamp
     _username = PfSenseString
 
+class PfSenseFilterInterface(PfSenseString):
+    @property
+    def data(self):
+        data = super().data
+        data_list = []
+        for iface_name in data.split(','):
+            found = False
+            for interface_name, interface_data in self.rootdoc.pfsense.interfaces.data.items():
+                if interface_name == iface_name:
+                    interface_data['name'] = iface_name
+                    data_list.append({'interface': interface_data})
+                    found = True
+                    break
+            if not found:
+                data_list.append(iface_name)
+        return data_list
+
 class PfSenseFilterAlias(PfSenseString):
     @property
     def data(self):
@@ -108,7 +125,7 @@ class PfSenseFilterRule(PfSenseNode):
     _id = PfSenseString
     _tracker = PfSenseString
     _type = PfSenseString
-    _interface = PfSenseString
+    _interface = PfSenseFilterInterface
     _ipprotocol = PfSenseString
     _tag = PfSenseString
     _tagged = PfSenseString
