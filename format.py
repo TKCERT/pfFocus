@@ -1,0 +1,45 @@
+#!/usr/bin/env python3
+import argparse
+import sys
+
+import yaml
+
+from markdown import output_markdown
+from parse import parse_pfsense
+from pfsense import PfSenseDocument
+
+
+def output_yaml(doc, stream):
+    yaml.safe_dump(doc.data, stream)
+
+OUTPUT_FORMATS = {
+    'yaml': output_yaml,
+    'md': output_markdown,
+}
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-i", dest="input_path", help="XML input path")
+    parser.add_argument("-o", dest="output_path", help="Output path", default="-")
+    parser.add_argument("-f", dest="output_format", help="Output format", default="yaml", choices=OUTPUT_FORMATS.keys())
+    return parser.parse_args()
+
+def main():
+    args = parse_args()
+    doc = PfSenseDocument()
+    print('Parsing {}'.format(args.input_path))
+    parse_pfsense(args.input_path, doc)
+    print('Successfully parsed pfSense config version {}'.format(doc.pfsense.version))
+    output_func = OUTPUT_FORMATS.get(args.output_format, output_yaml)
+    if args.output_path == '-':
+        print('Outputting to stdout')
+        output_file = sys.stdout
+        output_func(doc, output_file)
+    else:
+        print('Outputting to {}'.format(args.output_path))
+        with open(args.output_path, 'w+') as output_file:
+            output_func(doc, output_file)
+    print('Successfully outputted pfSense config as {}'.format(args.output_format))
+
+if __name__ == '__main__':
+    main()
