@@ -5,12 +5,19 @@ import threading
 import time
 
 
-class AnimationThread(threading.Thread):
+class Animation(threading.Thread):
     CHARS = ('\u2630', '\u2631', '\u2632', '\u2634')
 
     def __init__(self):
         super().__init__()
         self.is_running = False
+
+    def __enter__(self):
+        self.start()
+
+    def __exit__(self, type, value, tb):
+        self.is_running = False
+        self.join()
 
     def run(self):
         self.is_running = True
@@ -23,12 +30,3 @@ class AnimationThread(threading.Thread):
                 sys.stderr.write('\r')
                 break
         self.is_running = False
-
-def start():
-    thread = AnimationThread()
-    thread.start()
-    return thread
-
-def stop(thread):
-    thread.is_running = False
-    thread.join()

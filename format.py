@@ -4,10 +4,10 @@ import sys
 
 import yaml
 
-import progress
 from markdown import output_markdown
 from parse import parse_pfsense
 from pfsense import PfSenseDocument
+from progress import Animation
 
 
 def output_yaml(doc, stream):
@@ -27,31 +27,22 @@ def parse_args():
 
 def step_parse(args, doc):
     print('\u268b Parsing "{}" ...'.format(args.input_path), file=sys.stderr)
-    thread = progress.start()
-    try:
+    with Animation():
         parse_pfsense(args.input_path, doc)
-    finally:
-        progress.stop(thread)
     print('\u268d Successfully parsed pfSense config version {}.'.format(doc.pfsense.version), file=sys.stderr)
 
 def step_stdout(args, doc, output_func):
     print('\u2631 Outputting to stdout ...', file=sys.stderr)
-    thread = progress.start()
-    try:
+    with Animation():
         output_file = sys.stdout
         output_func(doc, output_file)
-    finally:
-        progress.stop(thread)
     print('\u2630 Successfully outputted pfSense config as {}.'.format(args.output_format), file=sys.stderr)
 
 def step_file(args, doc, output_func):
     print('\u2631 Outputting to "{}" ...'.format(args.output_path), file=sys.stderr)
-    thread = progress.start()
-    try:
+    with Animation():
         with open(args.output_path, 'w+') as output_file:
             output_func(doc, output_file)
-    finally:
-        progress.stop(thread)
     print('\u2630 Successfully outputted pfSense config as {}.'.format(args.output_format), file=sys.stderr)
 
 def main():
