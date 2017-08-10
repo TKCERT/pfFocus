@@ -21,6 +21,17 @@ This simple tool allows you to convert a full configuration backup of a *pf*Sens
 ![System and Interfaces](screenshots/pfFocus_System_Interfaces.png)
 ![Filter rules](screenshots/pfFocus_Filter_rules.png)
 
+## Features
+
+pfFocus currently supports the following configuration sections:
+
+* Basic system information
+* List of interfaces
+* List of aliases
+* NAT rules with alias and interface resolution
+* Outbound NAT rules with alias and interface resolution
+* Filter rules with alias and interface resolution
+
 ## Usage
 
 Main formatting tool: ```format.py```
@@ -43,6 +54,14 @@ Examples:
 ```
 ./parse.py config-backup.xml
 ```
+
+## Roadmap
+
+Some ideas for the future development of pfFocus:
+
+* Producing additional output formats, especially structured formats like CSV.
+* Using these structured formats to enable easy diff'ing of configurations.
+* Maybe functionality to correlate rule configurations of different firewalls.
 
 ## Credits
 
