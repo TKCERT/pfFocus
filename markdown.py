@@ -7,16 +7,25 @@ def format_rule_interface(rule_interface):
     if isinstance(rule_interface, list):
         rule_interface = ', '.join(map(format_rule_interface, rule_interface))
     elif isinstance(rule_interface, dict):
-        rule_interface = '[{name}](#interfaces "{descr}")'.format(**rule_interface['interface'])
-    return rule_interface
+        if 'descr' in rule_interface['interface']:
+            rule_interface = '[{name}](#interfaces "{descr}")'.format(**rule_interface['interface'])
+        else:
+            rule_interface = rule_interface['interface']['name']
+    return str(rule_interface)
 
 def format_rule_alias(rule_alias):
     if isinstance(rule_alias, dict):
         if 'alias' in rule_alias:
-            rule_alias = '[{name}](#aliases "{address}")'.format(**rule_alias['alias'])
+            if 'address' in rule_alias['alias']:
+                rule_alias = '[{name}](#aliases "{address}")'.format(**rule_alias['alias'])
+            else:
+                rule_alias = rule_alias['alias']['name']
         elif 'interface' in rule_alias:
-            rule_alias = '[{name}](#interfaces "{descr}")'.format(**rule_alias['interface'])
-    return rule_alias
+            if 'descr' in rule_alias['interface']:
+                rule_alias = '[{name}](#interfaces "{descr}")'.format(**rule_alias['interface'])
+            else:
+                rule_alias = rule_alias['interface']['name']
+    return str(rule_alias)
 
 def format_rule_location(rule_location):
     if isinstance(rule_location, PfSenseRuleAlias):
