@@ -8,16 +8,19 @@ import time
 class Animation(threading.Thread):
     CHARS = ('\u2630', '\u2631', '\u2632', '\u2634')
 
-    def __init__(self):
+    def __init__(self, quiet=False):
         super().__init__()
+        self.quiet = quiet
         self.is_running = False
 
     def __enter__(self):
-        self.start()
+        if not self.quiet:
+            self.start()
 
     def __exit__(self, type, value, tb):
-        self.is_running = False
-        self.join()
+        if not self.quiet:
+            self.is_running = False
+            self.join()
 
     def run(self):
         self.is_running = True

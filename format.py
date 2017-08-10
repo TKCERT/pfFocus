@@ -23,30 +23,37 @@ def get_output_func(args):
 
 def parse_args():
     parser = argparse.ArgumentParser()
+    parser.add_argument("-q", dest="quiet", action="store_const", const=True, default=False, help="Hide progress messages")
     parser.add_argument("-i", dest="input_path", help="XML input path")
     parser.add_argument("-o", dest="output_path", help="Output path", default="-")
     parser.add_argument("-f", dest="output_format", help="Output format", default="yaml", choices=OUTPUT_FORMATS.keys())
     return parser.parse_args()
 
 def step_parse(args, doc):
-    print('\u268b Parsing "{}" ...'.format(args.input_path), file=sys.stderr)
-    with Animation():
+    if not args.quiet:
+        print('\u268b Parsing "{}" ...'.format(args.input_path), file=sys.stderr)
+    with Animation(args.quiet):
         parse_pfsense(args.input_path, doc)
-    print('\u268d Successfully parsed pfSense config version {}.'.format(doc.pfsense.version), file=sys.stderr)
+    if not args.quiet:
+        print('\u268d Successfully parsed pfSense config version {}.'.format(doc.pfsense.version), file=sys.stderr)
 
 def step_stdout(args, doc, output_func):
-    print('\u2631 Outputting to stdout ...', file=sys.stderr)
-    with Animation():
+    if not args.quiet:
+        print('\u2631 Outputting to stdout ...', file=sys.stderr)
+    with Animation(args.quiet):
         output_file = sys.stdout
         output_func(doc, output_file)
-    print('\u2630 Successfully outputted pfSense config as {}.'.format(args.output_format), file=sys.stderr)
+    if not args.quiet:
+        print('\u2630 Successfully outputted pfSense config as {}.'.format(args.output_format), file=sys.stderr)
 
 def step_file(args, doc, output_func):
-    print('\u2631 Outputting to "{}" ...'.format(args.output_path), file=sys.stderr)
-    with Animation():
+    if not args.quiet:
+        print('\u2631 Outputting to "{}" ...'.format(args.output_path), file=sys.stderr)
+    with Animation(args.quiet):
         with open(args.output_path, 'w+') as output_file:
             output_func(doc, output_file)
-    print('\u2630 Successfully outputted pfSense config as {}.'.format(args.output_format), file=sys.stderr)
+    if not args.quiet:
+        print('\u2630 Successfully outputted pfSense config as {}.'.format(args.output_format), file=sys.stderr)
 
 def main():
     args = parse_args()
