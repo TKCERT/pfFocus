@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import io
-import sys
+from pprint import pprint
 from xml.sax import ContentHandler
 
 from defusedxml.sax import parse
@@ -81,7 +81,7 @@ def main():
     args = parse_args()
     doc = PfSenseDocument()
     parse_pfsense(args.input_path, doc)
-    print(doc)
+    pprint(doc)
 
 if __name__ == '__main__':
     main()
