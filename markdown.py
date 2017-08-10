@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from pfsense import PfSenseFlag, PfSenseRuleAlias, PfSenseRuleInterface, PfSenseRuleLocation
-from util import dict_to_list, obj_to_dict, obj_to_list
+from util import dict_to_list, obj_to_dict, obj_to_list, hasattr_r
 
 
 def format_rule_interface(rule_interface):
@@ -67,23 +67,27 @@ def output_markdown(doc, stream):
     output_markdown_table(stream, ('Option', 'Value'), info.items())
     stream.write("\n")
 
-    stream.write("## Interfaces\n")
-    interfaces = sorted(doc.pfsense.interfaces.data.items(), key=lambda interface: interface[0])
-    interfaces = [[interface_name]+dict_to_list(interface_data, ('enable', 'descr', 'if', 'ipaddr', 'subnet')) for interface_name, interface_data in interfaces]
-    output_markdown_table(stream, ('Name', 'Enabled', 'Description', 'Interface', 'Address', 'Subnet'), interfaces)
-    stream.write("\n")
+    if hasattr_r(doc.pfsense, 'interfaces'):
+        stream.write("## Interfaces\n")
+        interfaces = sorted(doc.pfsense.interfaces.data.items(), key=lambda interface: interface[0])
+        interfaces = [[interface_name]+dict_to_list(interface_data, ('enable', 'descr', 'if', 'ipaddr', 'subnet')) for interface_name, interface_data in interfaces]
+        output_markdown_table(stream, ('Name', 'Enabled', 'Description', 'Interface', 'Address', 'Subnet'), interfaces)
+        stream.write("\n")
 
-    stream.write("## Aliases\n")
-    aliases = [obj_to_list(alias, ('name', 'type', 'address', 'descr', 'detail')) for alias in doc.pfsense.aliases.alias]
-    output_markdown_table(stream, ('Name', 'Type', 'Address', 'Description', 'Detail'), aliases)
-    stream.write("\n")
+    if hasattr_r(doc.pfsense, 'aliases.alias'):
+        stream.write("## Aliases\n")
+        aliases = [obj_to_list(alias, ('name', 'type', 'address', 'descr', 'detail')) for alias in doc.pfsense.aliases.alias]
+        output_markdown_table(stream, ('Name', 'Type', 'Address', 'Description', 'Detail'), aliases)
+        stream.write("\n")
 
-    stream.write("## Outbound NAT rules\n")
-    rules = [obj_to_list(rule, ('disabled', 'interface', 'source', 'destination', 'descr')) for rule in doc.pfsense.nat.outbound.rule]
-    output_markdown_table(stream, ('Disabled', 'Interface', 'Source', 'Destination', 'Description'), rules)
-    stream.write("\n")
+    if hasattr_r(doc.pfsense, 'nat.outbound.rule'):
+        stream.write("## Outbound NAT rules\n")
+        rules = [obj_to_list(rule, ('disabled', 'interface', 'source', 'destination', 'descr')) for rule in doc.pfsense.nat.outbound.rule]
+        output_markdown_table(stream, ('Disabled', 'Interface', 'Source', 'Destination', 'Description'), rules)
+        stream.write("\n")
 
-    stream.write("## Filter rules\n")
-    rules = [obj_to_list(rule, ('disabled', 'interface', 'type', 'ipprotocol', 'protocol', 'source', 'destination', 'descr')) for rule in doc.pfsense.filter.rule]
-    output_markdown_table(stream, ('Disabled', 'Interface', 'Type', 'IP', 'Protocol', 'Source', 'Destination', 'Description'), rules)
-    stream.write("\n")
+    if hasattr_r(doc.pfsense, 'filter.rule'):
+        stream.write("## Filter rules\n")
+        rules = [obj_to_list(rule, ('disabled', 'interface', 'type', 'ipprotocol', 'protocol', 'source', 'destination', 'descr')) for rule in doc.pfsense.filter.rule]
+        output_markdown_table(stream, ('Disabled', 'Interface', 'Type', 'IP', 'Protocol', 'Source', 'Destination', 'Description'), rules)
+        stream.write("\n")

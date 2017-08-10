@@ -40,3 +40,10 @@ def obj_to_dict(obj, attributes):
 
 def obj_to_list(obj, attributes):
     return dict_to_list(obj.__dict__, attributes)
+
+def hasattr_r(obj, attribute):
+    for attr in attribute.split('.'):
+        if not hasattr(obj, attr):
+            return False
+        obj = getattr(obj, attr)
+    return True
