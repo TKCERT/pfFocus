@@ -110,7 +110,7 @@ class PfSenseRuleLocation(PfSenseNode):
     _any = PfSenseNode
     _network = PfSenseRuleAlias
     _address = PfSenseRuleAlias
-    _port = PfSenseInteger
+    _port = PfSenseString
 
 class PfSenseFilterRule(PfSenseNode):
     _id = PfSenseString
