@@ -78,6 +78,10 @@ def output_markdown(doc, stream):
     output_markdown_table(stream, ('Name', 'Type', 'Address', 'Description', 'Detail'), aliases)
     stream.write("\n")
 
+    stream.write("## Outbound NAT rules\n")
+    rules = [obj_to_list(rule, ('disabled', 'interface', 'source', 'destination', 'descr')) for rule in doc.pfsense.nat.outbound.rule]
+    output_markdown_table(stream, ('Disabled', 'Interface', 'Source', 'Destination', 'Description'), rules)
+    stream.write("\n")
 
     stream.write("## Filter rules\n")
     rules = [obj_to_list(rule, ('disabled', 'interface', 'type', 'ipprotocol', 'protocol', 'source', 'destination', 'descr')) for rule in doc.pfsense.filter.rule]

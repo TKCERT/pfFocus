@@ -138,6 +138,28 @@ class PfSenseFilterRule(PfSenseNode):
 class PfSenseFilter(PfSenseNode):
     _rule = [PfSenseFilterRule]
 
+class PfSenseNatOutboundRule(PfSenseNode):
+    _interface = PfSenseRuleInterface
+    _source = PfSenseRuleLocation
+    _dstport = PfSenseInteger
+    _target = PfSenseString
+    _targetip = PfSenseString
+    _targetip_subnet = PfSenseString
+    _destination = PfSenseRuleLocation
+    _natport = PfSenseInteger
+    _staticnatport = PfSenseInteger
+    _descr = PfSenseString
+    _created = PfSenseChange
+    _updated = PfSenseChange
+    _disabled = PfSenseFlag
+
+class PfSenseNatOutbound(PfSenseNode):
+    _mode = PfSenseString
+    _rule = [PfSenseNatOutboundRule]
+
+class PfSenseNat(PfSenseNode):
+    _outbound = PfSenseNatOutbound
+
 class PfSenseAlias(PfSenseNode):
     _name = PfSenseString
     _type = PfSenseString
@@ -179,6 +201,7 @@ class PfSenseConfig(PfSenseNode):
     _system = PfSenseSystem
     _interfaces = PfSenseInterfaces
     _aliases = PfSenseAliases
+    _nat = PfSenseNat
     _filter = PfSenseFilter
 
 class PfSenseDocument(PfSenseNode):
