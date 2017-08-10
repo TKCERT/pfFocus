@@ -131,6 +131,7 @@ class PfSenseFilterRule(PfSenseNode):
     _source = PfSenseRuleLocation
     _destination = PfSenseRuleLocation
     _descr = PfSenseString
+    _associated_rule_id = PfSenseString
     _created = PfSenseChange
     _updated = PfSenseChange
     _disabled = PfSenseFlag
@@ -157,8 +158,22 @@ class PfSenseNatOutbound(PfSenseNode):
     _mode = PfSenseString
     _rule = [PfSenseNatOutboundRule]
 
+class PfSenseNatRule(PfSenseNode):
+    _source = PfSenseRuleLocation
+    _destination = PfSenseRuleLocation
+    _protocol = PfSenseString
+    _target = PfSenseRuleAlias
+    _local_port = PfSenseInteger
+    _interface = PfSenseRuleInterface
+    _descr = PfSenseString
+    _associated_rule_id = PfSenseString
+    _created = PfSenseChange
+    _updated = PfSenseChange
+    _disabled = PfSenseFlag
+
 class PfSenseNat(PfSenseNode):
     _outbound = PfSenseNatOutbound
+    _rule = [PfSenseNatRule]
 
 class PfSenseAlias(PfSenseNode):
     _name = PfSenseString

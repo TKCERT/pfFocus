@@ -35,6 +35,8 @@ def format_rule_location(rule_location):
 def format_markdown_cell(cell):
     if cell is True or isinstance(cell, PfSenseFlag):
         cell = 'x'
+    elif isinstance(cell, PfSenseRuleAlias):
+        cell = format_rule_alias(cell.data)
     elif isinstance(cell, PfSenseRuleInterface):
         cell = format_rule_interface(cell.data)
     elif isinstance(cell, PfSenseRuleLocation):
@@ -87,6 +89,12 @@ def output_markdown(doc, stream):
         stream.write("## Aliases\n")
         aliases = [obj_to_list(alias, ('name', 'type', 'address', 'descr', 'detail')) for alias in doc.pfsense.aliases.alias]
         output_markdown_table(stream, ('Name', 'Type', 'Address', 'Description', 'Detail'), aliases)
+        stream.write("\n")
+
+    if hasattr_r(doc.pfsense, 'nat.rule'):
+        stream.write("## NAT rules\n")
+        rules = [obj_to_list(rule, ('disabled', 'interface', 'source', 'destination', 'protocol', 'target', 'local_port', 'descr')) for rule in doc.pfsense.nat.rule]
+        output_markdown_table(stream, ('Disabled', 'Interface', 'Source', 'Destination', 'Protocol', 'Target', 'Local port', 'Description'), rules)
         stream.write("\n")
 
     if hasattr_r(doc.pfsense, 'nat.outbound.rule'):
