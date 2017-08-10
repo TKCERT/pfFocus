@@ -91,8 +91,8 @@ def output_markdown(doc, stream):
 
     if hasattr_r(doc.pfsense, 'nat.outbound.rule'):
         stream.write("## Outbound NAT rules\n")
-        rules = [obj_to_list(rule, ('disabled', 'interface', 'source', 'destination', 'descr')) for rule in doc.pfsense.nat.outbound.rule]
-        output_markdown_table(stream, ('Disabled', 'Interface', 'Source', 'Destination', 'Description'), rules)
+        rules = [obj_to_list(rule, ('disabled', 'interface', 'source', 'destination', 'dstport', 'protocol', 'target', 'descr')) for rule in doc.pfsense.nat.outbound.rule]
+        output_markdown_table(stream, ('Disabled', 'Interface', 'Source', 'Destination', 'Destination port', 'Protocol', 'Target', 'Description'), rules)
         stream.write("\n")
 
     if hasattr_r(doc.pfsense, 'filter.rule'):
