@@ -4,7 +4,7 @@ OUT_YAML = $(IN_XML:%.xml=%.yaml)
 
 all: md yaml report
 clean:
-	rm $(OUT_MD) $(OUT_YAML)
+	rm -f $(OUT_MD) $(OUT_YAML)
 
 md: $(OUT_MD)
 yaml: $(OUT_YAML)
