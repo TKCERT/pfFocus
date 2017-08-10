@@ -69,8 +69,8 @@ def output_markdown(doc, stream):
 
     stream.write("## Interfaces\n")
     interfaces = sorted(doc.pfsense.interfaces.data.items(), key=lambda interface: interface[0])
-    interfaces = [[interface_name]+dict_to_list(interface_data, ('descr', 'if', 'ipaddr', 'subnet')) for interface_name, interface_data in interfaces]
-    output_markdown_table(stream, ('Name', 'Description', 'Interface', 'Address', 'Subnet'), interfaces)
+    interfaces = [[interface_name]+dict_to_list(interface_data, ('enable', 'descr', 'if', 'ipaddr', 'subnet')) for interface_name, interface_data in interfaces]
+    output_markdown_table(stream, ('Name', 'Enabled', 'Description', 'Interface', 'Address', 'Subnet'), interfaces)
     stream.write("\n")
 
     stream.write("## Aliases\n")
@@ -78,7 +78,8 @@ def output_markdown(doc, stream):
     output_markdown_table(stream, ('Name', 'Type', 'Address', 'Description', 'Detail'), aliases)
     stream.write("\n")
 
+
     stream.write("## Filter rules\n")
-    rules = [obj_to_list(rule, ('interface', 'type', 'ipprotocol', 'protocol', 'source', 'destination', 'descr')) for rule in doc.pfsense.filter.rule]
-    output_markdown_table(stream, ('Interface', 'Type', 'IP', 'Protocol', 'Source', 'Destination', 'Description'), rules)
+    rules = [obj_to_list(rule, ('disabled', 'interface', 'type', 'ipprotocol', 'protocol', 'source', 'destination', 'descr')) for rule in doc.pfsense.filter.rule]
+    output_markdown_table(stream, ('Disabled', 'Interface', 'Type', 'IP', 'Protocol', 'Source', 'Destination', 'Description'), rules)
     stream.write("\n")

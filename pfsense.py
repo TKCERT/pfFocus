@@ -133,6 +133,7 @@ class PfSenseFilterRule(PfSenseNode):
     _descr = PfSenseString
     _created = PfSenseChange
     _updated = PfSenseChange
+    _disabled = PfSenseFlag
 
 class PfSenseFilter(PfSenseNode):
     _rule = [PfSenseFilterRule]
@@ -152,6 +153,7 @@ class PfSenseInterface(PfSenseNode):
     _descr = PfSenseString
     _ipaddr = PfSenseString
     _subnet = PfSenseString
+    _enable = PfSenseFlag
 
 class PfSenseInterfaces(PfSenseNode):
     _wan = PfSenseInterface
