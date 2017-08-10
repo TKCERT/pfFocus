@@ -27,7 +27,7 @@ def get_progress_animation(args):
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("-q", dest="quiet", action="store_const", const=True, default=False, help="Hide progress messages")
-    parser.add_argument("-i", dest="input_path", help="XML input path")
+    parser.add_argument("-i", dest="input_path", help="XML input path", required=True)
     parser.add_argument("-o", dest="output_path", help="Output path", default="-")
     parser.add_argument("-f", dest="output_format", help="Output format", default="yaml", choices=OUTPUT_FORMATS.keys())
     return parser.parse_args()
