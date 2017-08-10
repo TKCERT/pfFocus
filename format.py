@@ -21,6 +21,9 @@ OUTPUT_FORMATS = {
 def get_output_func(args):
     return OUTPUT_FORMATS.get(args.output_format, output_yaml)
 
+def get_progress_animation(args):
+    return Animation(args.quiet or args.output_path == '-')
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("-q", dest="quiet", action="store_const", const=True, default=False, help="Hide progress messages")
@@ -32,7 +35,7 @@ def parse_args():
 def step_parse(args, doc):
     if not args.quiet:
         print('\u268b Parsing "{}" ...'.format(args.input_path), file=sys.stderr)
-    with Animation(args.quiet):
+    with get_progress_animation(args):
         parse_pfsense(args.input_path, doc)
     if not args.quiet:
         print('\u268d Successfully parsed pfSense config version {}.'.format(doc.pfsense.version), file=sys.stderr)
@@ -40,7 +43,7 @@ def step_parse(args, doc):
 def step_stdout(args, doc, output_func):
     if not args.quiet:
         print('\u2631 Outputting to stdout ...', file=sys.stderr)
-    with Animation(args.quiet):
+    with get_progress_animation(args):
         output_file = sys.stdout
         output_func(doc, output_file)
     if not args.quiet:
@@ -49,7 +52,7 @@ def step_stdout(args, doc, output_func):
 def step_file(args, doc, output_func):
     if not args.quiet:
         print('\u2631 Outputting to "{}" ...'.format(args.output_path), file=sys.stderr)
-    with Animation(args.quiet):
+    with get_progress_animation(args):
         with open(args.output_path, 'w+') as output_file:
             output_func(doc, output_file)
     if not args.quiet:
