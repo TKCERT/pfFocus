@@ -1,6 +1,6 @@
 # pfFocus
 
-This simple tool allows you to convert a full configuration backup of a pfSense firewall into some useful output format, like Markdown or YAML. It enables you to *focus* on the important parts of your firewall configuration and allows you to get a quick overview of the most important settings.
+This simple tool allows you to convert a full configuration backup of a pfSense firewall into some meaningful output format, like Markdown or YAML. It enables you to *focus* on the important parts of your firewall configuration and allows you to get a quick overview of the most important settings.
 
 ## Requirements
 
@@ -33,7 +33,7 @@ Examples:
 
 ## Credits
 
-* Thomas Patzke (@thomaspatzke) for
+* Thomas Patzke ([@thomaspatzke](https://github.com/thomaspatzke)) for
     * valuable suggestions and feedback
 * Florian Roth ([@Cyb3rOps](https://twitter.com/Cyb3rOps)) for
     * giving it the name *pfFocus*
