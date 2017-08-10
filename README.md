@@ -1,12 +1,25 @@
 # pfFocus
 
-This simple tool allows you to convert a full configuration backup of a pfSense firewall into some meaningful output format, like Markdown or YAML. It enables you to *focus* on the important parts of your firewall configuration and allows you to get a quick overview of the most important settings.
+[![Build Status](https://travis-ci.org/TKCERT/pfFocus.svg?branch=master)](https://travis-ci.org/TKCERT/pfFocus)
+
+This simple tool allows you to convert a full configuration backup of a *pf*Sense firewall into some meaningful output format, like Markdown or YAML. It enables you to **focus** on the important parts of your firewall configuration and allows you to get a quick overview of the most important settings.
 
 ## Requirements
 
 * Python 3.5+
     * defusedxml==0.5.0
     * PyYAML==3.12
+
+## Screenshots
+
+**Before:** Configuration backup as XML
+
+![Configuration backup as XML](screenshots/pfFocus_xml.png)
+
+**After:** Markdown documentation
+
+![System and Interfaces](screenshots/pfFocus_System_Interfaces.png)
+![Filter rules](screenshots/pfFocus_Filter_rules.png)
 
 ## Usage
 
