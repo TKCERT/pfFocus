@@ -1,39 +1,41 @@
 #!/usr/bin/env python3
-from pfsense import PfSenseFilterInterface, PfSenseFilterAlias, PfSenseFilterLocation
+from pfsense import PfSenseFlag, PfSenseRuleAlias, PfSenseRuleInterface, PfSenseRuleLocation
 from util import dict_to_list, obj_to_dict, obj_to_list
 
 
-def format_filter_interface(filter_interface):
-    if isinstance(filter_interface, list):
-        filter_interface = ', '.join(map(format_filter_interface, filter_interface))
-    elif isinstance(filter_interface, dict):
-        filter_interface = '[{name}](#interfaces "{descr}")'.format(**filter_interface['interface'])
-    return filter_interface
+def format_rule_interface(rule_interface):
+    if isinstance(rule_interface, list):
+        rule_interface = ', '.join(map(format_rule_interface, rule_interface))
+    elif isinstance(rule_interface, dict):
+        rule_interface = '[{name}](#interfaces "{descr}")'.format(**rule_interface['interface'])
+    return rule_interface
 
-def format_filter_alias(filter_alias):
-    if isinstance(filter_alias, dict):
-        if 'alias' in filter_alias:
-            filter_alias = '[{name}](#aliases "{address}")'.format(**filter_alias['alias'])
-        elif 'interface' in filter_alias:
-            filter_alias = '[{name}](#interfaces "{descr}")'.format(**filter_alias['interface'])
-    return filter_alias
+def format_rule_alias(rule_alias):
+    if isinstance(rule_alias, dict):
+        if 'alias' in rule_alias:
+            rule_alias = '[{name}](#aliases "{address}")'.format(**rule_alias['alias'])
+        elif 'interface' in rule_alias:
+            rule_alias = '[{name}](#interfaces "{descr}")'.format(**rule_alias['interface'])
+    return rule_alias
 
-def format_filter_location(filter_location):
-    if isinstance(filter_location, PfSenseFilterAlias):
-        filter_location = format_filter_alias(filter_location.data)
-    return str(filter_location)
+def format_rule_location(rule_location):
+    if isinstance(rule_location, PfSenseRuleAlias):
+        rule_location = format_rule_alias(rule_location.data)
+    return str(rule_location)
 
 def format_markdown_cell(cell):
-    if isinstance(cell, PfSenseFilterInterface):
-        cell = format_filter_interface(cell.data)
-    elif isinstance(cell, PfSenseFilterLocation):
+    if cell is True or isinstance(cell, PfSenseFlag):
+        cell = 'x'
+    elif isinstance(cell, PfSenseRuleInterface):
+        cell = format_rule_interface(cell.data)
+    elif isinstance(cell, PfSenseRuleLocation):
         data = ''
         if hasattr(cell, 'any'):
             data += 'any'
         elif hasattr(cell, 'address'):
-            data += format_filter_location(cell.address)
+            data += format_rule_location(cell.address)
         elif hasattr(cell, 'network'):
-            data += format_filter_location(cell.network)
+            data += format_rule_location(cell.network)
         if hasattr(cell, 'port'):
             data += ':'
             data += str(cell.port)

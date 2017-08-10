@@ -64,11 +64,32 @@ class PfSenseTimestamp(PfSenseNode):
     def data(self):
         return self.datetime
 
+class PfSenseFlag(PfSenseNode):
+    @property
+    def data(self):
+        return True
+
 class PfSenseChange(PfSenseNode):
     _time = PfSenseTimestamp
     _username = PfSenseString
 
-class PfSenseFilterInterface(PfSenseString):
+class PfSenseRuleAlias(PfSenseString):
+    @property
+    def data(self):
+        data = super().data
+        for interface_name, interface_data in self.rootdoc.pfsense.interfaces.data.items():
+            alias_name = data
+            if alias_name.endswith('ip'):
+                alias_name = alias_name[:-2]
+            if interface_name == alias_name:
+                interface_data['name'] = data
+                return {'interface': interface_data}
+        for alias in self.rootdoc.pfsense.aliases.alias:
+            if alias.name.string == data:
+                return {'alias': alias.data}
+        return data
+
+class PfSenseRuleInterface(PfSenseString):
     @property
     def data(self):
         data = super().data
@@ -85,33 +106,17 @@ class PfSenseFilterInterface(PfSenseString):
                 data_list.append(iface_name)
         return data_list
 
-class PfSenseFilterAlias(PfSenseString):
-    @property
-    def data(self):
-        data = super().data
-        for interface_name, interface_data in self.rootdoc.pfsense.interfaces.data.items():
-            alias_name = data
-            if alias_name.endswith('ip'):
-                alias_name = alias_name[:-2]
-            if interface_name == alias_name:
-                interface_data['name'] = data
-                return {'interface': interface_data}
-        for alias in self.rootdoc.pfsense.aliases.alias:
-            if alias.name.string == data:
-                return {'alias': alias.data}
-        return data
-
-class PfSenseFilterLocation(PfSenseNode):
+class PfSenseRuleLocation(PfSenseNode):
     _any = PfSenseNode
-    _network = PfSenseFilterAlias
-    _address = PfSenseFilterAlias
+    _network = PfSenseRuleAlias
+    _address = PfSenseRuleAlias
     _port = PfSenseInteger
 
 class PfSenseFilterRule(PfSenseNode):
     _id = PfSenseString
     _tracker = PfSenseString
     _type = PfSenseString
-    _interface = PfSenseFilterInterface
+    _interface = PfSenseRuleInterface
     _ipprotocol = PfSenseString
     _tag = PfSenseString
     _tagged = PfSenseString
@@ -123,11 +128,11 @@ class PfSenseFilterRule(PfSenseNode):
     _statetype = PfSenseString
     _os = PfSenseString
     _protocol = PfSenseString
-    _source = PfSenseFilterLocation
-    _destination = PfSenseFilterLocation
+    _source = PfSenseRuleLocation
+    _destination = PfSenseRuleLocation
     _descr = PfSenseString
-    _updated = PfSenseChange
     _created = PfSenseChange
+    _updated = PfSenseChange
 
 class PfSenseFilter(PfSenseNode):
     _rule = [PfSenseFilterRule]
