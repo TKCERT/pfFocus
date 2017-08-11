@@ -1,3 +1,5 @@
+![pfFocus](logos/pfFocus.png)
+
 # pfFocus
 
 [![Build Status](https://travis-ci.org/TKCERT/pfFocus.svg?branch=master)](https://travis-ci.org/TKCERT/pfFocus)
@@ -69,3 +71,4 @@ Some ideas for the future development of pfFocus:
     * valuable suggestions and feedback
 * Florian Roth ([@Cyb3rOps](https://twitter.com/Cyb3rOps)) for
     * giving it the name *pfFocus*
+    * the very nice and gorgeous logo
