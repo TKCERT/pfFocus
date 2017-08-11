@@ -78,6 +78,10 @@ class PfSenseChange(PfSenseNode):
     _time = PfSenseTimestamp
     _username = PfSenseString
 
+class PfSenseRange(PfSenseNode):
+    _from = PfSenseString
+    _to = PfSenseString
+
 class PfSenseSysCtlItem(PfSenseNode):
     _tunable = PfSenseString
     _value = PfSenseString
@@ -85,6 +89,20 @@ class PfSenseSysCtlItem(PfSenseNode):
 
 class PfSenseSysCtl(PfSenseNode):
     _item = [PfSenseSysCtlItem]
+
+class PfSenseStaticMap(PfSenseNode):
+    _mac = PfSenseString
+    _ipaddr = PfSenseString
+    _hostname = PfSenseString
+
+class PfSenseDhcpdItem(PfSenseNode):
+    _range = [PfSenseRange]
+    _staticmap = [PfSenseStaticMap]
+
+class PfSenseDhcpd(PfSenseInterfacesNode):
+    _wan = PfSenseDhcpdItem
+    _lan = PfSenseDhcpdItem
+    _opt = PfSenseDhcpdItem
 
 class PfSenseRuleAlias(PfSenseString):
     @property
@@ -269,6 +287,7 @@ class PfSenseConfig(PfSenseNode):
     _aliases = PfSenseAliases
     _nat = PfSenseNat
     _filter = PfSenseFilter
+    _dhcpd = PfSenseDhcpd
     _sysctl = PfSenseSysCtl
 
 class PfSenseDocument(PfSenseNode):

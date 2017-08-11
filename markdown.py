@@ -109,6 +109,25 @@ def output_markdown(doc, stream):
         output_markdown_table(stream, ('Network', 'Gateway', 'Description'), routes)
         stream.write("\n")
 
+    if hasattr_r(doc.pfsense, 'dhcpd'):
+        stream.write("## DHCP ranges\n")
+        for dhcpd_interface_name in sorted(doc.pfsense.dhcpd.data.keys()):
+            dhcpd_interface = PfSenseRuleInterface(parent=doc.pfsense.dhcpd)
+            dhcpd_interface.string = dhcpd_interface_name
+            stream.write("### {}\n".format(format_markdown_cell(dhcpd_interface)))
+            dhcpd = getattr(doc.pfsense.dhcpd, dhcpd_interface_name)
+            if hasattr_r(dhcpd, 'range'):
+                stream.write("#### Ranges\n")
+                ranges = [obj_to_list(range, ('from', 'to')) for range in dhcpd.range]
+                output_markdown_table(stream, ('From', 'To'), ranges)
+                stream.write("\n")
+            if hasattr_r(dhcpd, 'staticmap'):
+                stream.write("#### Static mappings\n")
+                staticmaps = [obj_to_list(staticmap, ('mac', 'ipaddr', 'hostname')) for staticmap in dhcpd.staticmap]
+                output_markdown_table(stream, ('MAC', 'Address', 'Hostname'), staticmaps)
+                stream.write("\n")
+        stream.write("\n")
+
     if hasattr_r(doc.pfsense, 'aliases.alias'):
         stream.write("## Aliases\n")
         aliases = [obj_to_list(alias, ('name', 'type', 'address', 'descr', 'detail')) for alias in doc.pfsense.aliases.alias]
