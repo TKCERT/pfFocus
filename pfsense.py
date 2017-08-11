@@ -11,7 +11,7 @@ class PfSenseNode(DataNode):
 
     def __getattr__(self, name):
         # This trick hides PyLint error messages...
-        raise AttributeError
+        return super().__getattribute__(name)
 
     def __call__(self, content):
         pass # discard content
@@ -43,7 +43,6 @@ class PfSenseString(PfSenseNode):
     def data(self):
         return self.string
 
-
 class PfSenseInteger(PfSenseNode):
     integer = None
 
@@ -63,6 +62,12 @@ class PfSenseTimestamp(PfSenseNode):
     @property
     def data(self):
         return self.datetime
+
+class PfSenseInterfacesNode(PfSenseNode):
+    def __getattr__(self, name):
+        if name.startswith('_opt'):
+            return self._opt
+        return super().__getattribute__(name)
 
 class PfSenseFlag(PfSenseNode):
     @property
@@ -239,15 +244,10 @@ class PfSenseInterface(PfSenseNode):
     _subnet = PfSenseString
     _enable = PfSenseFlag
 
-class PfSenseInterfaces(PfSenseNode):
+class PfSenseInterfaces(PfSenseInterfacesNode):
     _wan = PfSenseInterface
     _lan = PfSenseInterface
     _opt = PfSenseInterface
-
-    def __getattr__(self, name):
-        if name.startswith('_opt'):
-            return self._opt
-        raise AttributeError
 
 class PfSenseSystem(PfSenseNode):
     _optimization = PfSenseString
