@@ -93,7 +93,7 @@ def output_markdown(doc, stream):
 
     if hasattr_r(doc.pfsense, 'bridges.bridged'):
         stream.write("## Bridges\n")
-        bridges = [obj_to_list(vlan, ('bridgeif', 'members', 'descr')) for vlan in doc.pfsense.bridges.bridged]
+        bridges = [obj_to_list(bridge, ('bridgeif', 'members', 'descr')) for bridge in doc.pfsense.bridges.bridged]
         output_markdown_table(stream, ('Name', 'Members', 'Description'), bridges)
         stream.write("\n")
 
