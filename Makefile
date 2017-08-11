@@ -5,4 +5,4 @@ test:
 	$(MAKE) -C tests all
 
 lint:
-	pylint --py3k format.py
+	pylint --disable=line-too-long,missing-docstring format.py
