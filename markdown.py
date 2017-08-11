@@ -85,6 +85,12 @@ def output_markdown(doc, stream):
         output_markdown_table(stream, ('Name', 'Enabled', 'Description', 'Interface', 'Address', 'Subnet'), interfaces)
         stream.write("\n")
 
+    if hasattr_r(doc.pfsense, 'staticroutes.route'):
+        stream.write("## Static routes\n")
+        routes = [obj_to_list(route, ('network', 'gateway', 'descr')) for route in doc.pfsense.staticroutes.route]
+        output_markdown_table(stream, ('Network', 'Gateway', 'Description'), routes)
+        stream.write("\n")
+
     if hasattr_r(doc.pfsense, 'aliases.alias'):
         stream.write("## Aliases\n")
         aliases = [obj_to_list(alias, ('name', 'type', 'address', 'descr', 'detail')) for alias in doc.pfsense.aliases.alias]

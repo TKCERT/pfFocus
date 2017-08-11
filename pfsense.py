@@ -185,6 +185,14 @@ class PfSenseAlias(PfSenseNode):
 class PfSenseAliases(PfSenseNode):
     _alias = [PfSenseAlias]
 
+class PfSenseRoute(PfSenseNode):
+    _network = PfSenseString
+    _gateway = PfSenseString
+    _descr = PfSenseString
+
+class PfSenseStaticRoutes(PfSenseNode):
+    _route = [PfSenseRoute]
+
 class PfSenseInterface(PfSenseNode):
     _if = PfSenseString
     _descr = PfSenseString
@@ -215,6 +223,7 @@ class PfSenseConfig(PfSenseNode):
     _version = PfSenseString
     _system = PfSenseSystem
     _interfaces = PfSenseInterfaces
+    _staticroutes = PfSenseStaticRoutes
     _aliases = PfSenseAliases
     _nat = PfSenseNat
     _filter = PfSenseFilter
