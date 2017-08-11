@@ -152,6 +152,12 @@ def output_markdown(doc, stream):
         output_markdown_table(stream, ('Disabled', 'Interface', 'Type', 'IP', 'Protocol', 'Source', 'Destination', 'Description'), rules)
         stream.write("\n")
 
+    if hasattr_r(doc.pfsense, 'syslog'):
+        stream.write("## Syslog configuration\n")
+        syslog = obj_to_dict(doc.pfsense.syslog, ('enable', 'logall', 'nentries', 'remoteserver', 'remoteserver2', 'remoteserver3', 'sourceip', 'ipproto'))
+        output_markdown_table(stream, ('Option', 'Value'), syslog.items())
+        stream.write("\n")
+
     if hasattr_r(doc.pfsense, 'sysctl.item'):
         stream.write("## System tunables\n")
         tunables = [obj_to_list(tunable, ('tunable', 'value', 'descr')) for tunable in doc.pfsense.sysctl.item]

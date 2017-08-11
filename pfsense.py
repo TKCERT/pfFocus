@@ -267,6 +267,16 @@ class PfSenseInterfaces(PfSenseInterfacesNode):
     _lan = PfSenseInterface
     _opt = PfSenseInterface
 
+class PfSenseSyslog(PfSenseNode):
+    _nentries = PfSenseInteger
+    _remoteserver = PfSenseString
+    _remoteserver2 = PfSenseString
+    _remoteserver3 = PfSenseString
+    _sourceip = PfSenseRuleInterface
+    _ipproto = PfSenseString
+    _logall = PfSenseFlag
+    _enable = PfSenseFlag
+
 class PfSenseSystem(PfSenseNode):
     _optimization = PfSenseString
     _hostname = PfSenseString
@@ -288,6 +298,7 @@ class PfSenseConfig(PfSenseNode):
     _nat = PfSenseNat
     _filter = PfSenseFilter
     _dhcpd = PfSenseDhcpd
+    _syslog = PfSenseSyslog
     _sysctl = PfSenseSysCtl
 
 class PfSenseDocument(PfSenseNode):
