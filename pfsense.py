@@ -73,6 +73,14 @@ class PfSenseChange(PfSenseNode):
     _time = PfSenseTimestamp
     _username = PfSenseString
 
+class PfSenseSysCtlItem(PfSenseNode):
+    _tunable = PfSenseString
+    _value = PfSenseString
+    _descr = PfSenseString
+
+class PfSenseSysCtl(PfSenseNode):
+    _item = [PfSenseSysCtlItem]
+
 class PfSenseRuleAlias(PfSenseString):
     @property
     def data(self):
@@ -261,6 +269,7 @@ class PfSenseConfig(PfSenseNode):
     _aliases = PfSenseAliases
     _nat = PfSenseNat
     _filter = PfSenseFilter
+    _sysctl = PfSenseSysCtl
 
 class PfSenseDocument(PfSenseNode):
     _pfsense = PfSenseConfig

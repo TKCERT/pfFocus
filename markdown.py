@@ -132,3 +132,9 @@ def output_markdown(doc, stream):
         rules = [obj_to_list(rule, ('disabled', 'interface', 'type', 'ipprotocol', 'protocol', 'source', 'destination', 'descr')) for rule in doc.pfsense.filter.rule]
         output_markdown_table(stream, ('Disabled', 'Interface', 'Type', 'IP', 'Protocol', 'Source', 'Destination', 'Description'), rules)
         stream.write("\n")
+
+    if hasattr_r(doc.pfsense, 'sysctl.item'):
+        stream.write("## System tunables\n")
+        tunables = [obj_to_list(tunable, ('tunable', 'value', 'descr')) for tunable in doc.pfsense.sysctl.item]
+        output_markdown_table(stream, ('Name', 'Value', 'Description'), tunables)
+        stream.write("\n")
