@@ -216,6 +216,37 @@ class PfSenseAlias(PfSenseNode):
 class PfSenseAliases(PfSenseNode):
     _alias = [PfSenseAlias]
 
+class PfSenseDnsMasqDomainOverride(PfSenseNode):
+    _domain = PfSenseString
+    _ip = PfSenseString
+    _idx = PfSenseInteger
+    _descr = PfSenseString
+
+class PfSenseDnsMasqHostAliasItem(PfSenseNode):
+    _host = PfSenseString
+    _domain = PfSenseString
+    _description = PfSenseString
+
+class PfSenseDnsMasqHostAliases(PfSenseNode):
+    _item = [PfSenseDnsMasqHostAliasItem]
+
+class PfSenseDnsMasqHost(PfSenseNode):
+    _host = PfSenseString
+    _domain = PfSenseString
+    _ip = PfSenseString
+    _descr = PfSenseString
+    _aliases = PfSenseDnsMasqHostAliases
+
+class PfSenseDnsMasq(PfSenseNode):
+    _enable = PfSenseFlag
+    _reqdhcp = PfSenseFlag
+    _reqdhcpstatic = PfSenseFlag
+    _strict_order = PfSenseFlag
+    _custom_options = PfSenseString
+    _interface = PfSenseRuleInterface
+    _hosts = [PfSenseDnsMasqHost]
+    _domainoverrides = [PfSenseDnsMasqDomainOverride]
+
 class PfSenseRoute(PfSenseNode):
     _network = PfSenseString
     _gateway = PfSenseString
@@ -297,6 +328,7 @@ class PfSenseConfig(PfSenseNode):
     _aliases = PfSenseAliases
     _nat = PfSenseNat
     _filter = PfSenseFilter
+    _dnsmasq = PfSenseDnsMasq
     _dhcpd = PfSenseDhcpd
     _syslog = PfSenseSyslog
     _sysctl = PfSenseSysCtl

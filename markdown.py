@@ -154,6 +154,26 @@ def output_markdown(doc, stream):
         output_markdown_table(stream, ('Disabled', 'Interface', 'Type', 'IP', 'Protocol', 'Source', 'Destination', 'Description'), rules)
         stream.write("\n")
 
+    if hasattr_r(doc.pfsense, 'dnsmasq'):
+        stream.write("## DNSmasq configuration\n")
+        dnsmasq = obj_to_dict(doc.pfsense.dnsmasq, ('enable', 'regdhcp', 'regdhcpstatic', 'strict_order', 'custom_options', 'interface'))
+        output_markdown_table(stream, ('Option', 'Value'), dnsmasq.items())
+        stream.write("\n")
+        if hasattr_r(doc.pfsense.dnsmasq, 'hosts'):
+            stream.write("### Host overrides\n")
+            hosts = [obj_to_dict(host, ('host', 'domain', 'ip', 'descr', 'aliases')) for host in doc.pfsense.dnsmasq.hosts]
+            hostlists = [[host] + list(map(lambda item: (setattr(item, 'ip', host['ip']),
+                                                         setattr(item, 'descr', item.description), item.data)[-1],
+                                           getattr(host['aliases'], 'item', []))) for host in hosts]
+            hosts = [dict_to_list(host, ('host', 'domain', 'ip', 'descr')) for hostlist in hostlists for host in hostlist]
+            output_markdown_table(stream, ('Host', 'Domain', 'IP', 'Description'), hosts)
+            stream.write("\n")
+        if hasattr_r(doc.pfsense.dnsmasq, 'domainoverrides'):
+            stream.write("### Domain overrides\n")
+            domains = [obj_to_list(domain, ('domain', 'ip', 'descr')) for domain in doc.pfsense.dnsmasq.domainoverrides]
+            output_markdown_table(stream, ('Domain', 'IP', 'Description'), domains)
+            stream.write("\n")
+
     if hasattr_r(doc.pfsense, 'syslog'):
         stream.write("## Syslog configuration\n")
         syslog = obj_to_dict(doc.pfsense.syslog, ('enable', 'logall', 'nentries', 'remoteserver', 'remoteserver2', 'remoteserver3', 'sourceip', 'ipproto'))
