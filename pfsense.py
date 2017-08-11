@@ -207,6 +207,23 @@ class PfSenseGatewayItem(PfSenseNode):
 class PfSenseGateways(PfSenseNode):
     _gateway_item = [PfSenseGatewayItem]
 
+class PfSenseVlan(PfSenseNode):
+    _vlanif = PfSenseString
+    _tag = PfSenseInteger
+    _if = PfSenseString
+    _descr = PfSenseString
+
+class PfSenseVlans(PfSenseNode):
+    _vlan = [PfSenseVlan]
+
+class PfSenseBridged(PfSenseNode):
+    _bridgeif = PfSenseString
+    _members = PfSenseRuleInterface
+    _descr = PfSenseString
+
+class PfSenseBridges(PfSenseNode):
+    _bridged = [PfSenseBridged]
+
 class PfSenseInterface(PfSenseNode):
     _if = PfSenseString
     _descr = PfSenseString
@@ -237,6 +254,8 @@ class PfSenseConfig(PfSenseNode):
     _version = PfSenseString
     _system = PfSenseSystem
     _interfaces = PfSenseInterfaces
+    _vlans = PfSenseVlans
+    _bridges = PfSenseBridges
     _gateways = PfSenseGateways
     _staticroutes = PfSenseStaticRoutes
     _aliases = PfSenseAliases

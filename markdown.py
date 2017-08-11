@@ -85,6 +85,18 @@ def output_markdown(doc, stream):
         output_markdown_table(stream, ('Name', 'Enabled', 'Description', 'Interface', 'Address', 'Subnet'), interfaces)
         stream.write("\n")
 
+    if hasattr_r(doc.pfsense, 'vlans.vlan'):
+        stream.write("## VLANs\n")
+        vlans = [obj_to_list(vlan, ('vlanif', 'tag', 'if', 'descr')) for vlan in doc.pfsense.vlans.vlan]
+        output_markdown_table(stream, ('Name', 'Tag', 'Interface', 'Description'), vlans)
+        stream.write("\n")
+
+    if hasattr_r(doc.pfsense, 'bridges.bridged'):
+        stream.write("## Bridges\n")
+        bridges = [obj_to_list(vlan, ('bridgeif', 'members', 'descr')) for vlan in doc.pfsense.bridges.bridged]
+        output_markdown_table(stream, ('Name', 'Members', 'Description'), bridges)
+        stream.write("\n")
+
     if hasattr_r(doc.pfsense, 'gateways.gateway_item'):
         stream.write("## Gateways\n")
         gateways = [obj_to_list(gateway, ('defaultgw', 'name', 'interface', 'gateway', 'weight', 'ipprotocol', 'descr')) for gateway in doc.pfsense.gateways.gateway_item]
