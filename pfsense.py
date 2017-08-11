@@ -193,6 +193,20 @@ class PfSenseRoute(PfSenseNode):
 class PfSenseStaticRoutes(PfSenseNode):
     _route = [PfSenseRoute]
 
+class PfSenseGatewayItem(PfSenseNode):
+    _interface = PfSenseRuleInterface
+    _gateway = PfSenseString
+    _name = PfSenseString
+    _weight = PfSenseInteger
+    _ipprotocol = PfSenseString
+    _interval = PfSenseInteger
+    _alert_interval = PfSenseInteger
+    _descr = PfSenseString
+    _defaultgw = PfSenseFlag
+
+class PfSenseGateways(PfSenseNode):
+    _gateway_item = [PfSenseGatewayItem]
+
 class PfSenseInterface(PfSenseNode):
     _if = PfSenseString
     _descr = PfSenseString
@@ -223,6 +237,7 @@ class PfSenseConfig(PfSenseNode):
     _version = PfSenseString
     _system = PfSenseSystem
     _interfaces = PfSenseInterfaces
+    _gateways = PfSenseGateways
     _staticroutes = PfSenseStaticRoutes
     _aliases = PfSenseAliases
     _nat = PfSenseNat
