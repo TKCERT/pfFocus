@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from pfsense import PfSenseFlag, PfSenseRuleAlias, PfSenseRuleInterface, PfSenseRuleLocation
+from pfsense import PfSenseNode, PfSenseRuleAlias, PfSenseRuleInterface, PfSenseRuleLocation
 from util import dict_to_list, obj_to_dict, obj_to_list, hasattr_r
 
 
@@ -33,7 +33,9 @@ def format_rule_location(rule_location):
     return str(rule_location)
 
 def format_markdown_cell(cell):
-    if cell is True or isinstance(cell, PfSenseFlag):
+    if cell is None or (isinstance(cell, PfSenseNode) and cell.data is None):
+        cell = ''
+    elif cell is True or (isinstance(cell, PfSenseNode) and cell.data is True):
         cell = 'x'
     elif isinstance(cell, PfSenseRuleAlias):
         cell = format_rule_alias(cell.data)
