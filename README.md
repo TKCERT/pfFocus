@@ -28,11 +28,14 @@ This simple tool allows you to convert a full configuration backup of a *pf*Sens
 pfFocus currently supports the following configuration sections:
 
 * Basic system information
-* List of interfaces
-* List of aliases
+* List of interfaces, VLANs, bridges, gateways and static mappings
+* List of DHCP ranges and aliases
 * NAT rules with alias and interface resolution
 * Outbound NAT rules with alias and interface resolution
 * Filter rules with alias and interface resolution
+* DNS forwarder (DNSmasq) configuration
+* OpenVPN server and client configurations
+* Syslog and sysctl configuration
 
 ## Usage
 
