@@ -56,7 +56,7 @@ def format_markdown_cell(cell):
             data += ':'
             data += str(cell.port)
         cell = data
-    return str(cell).replace('|', '\\|')
+    return str(cell).replace('|', '\\|').replace('\n', '  ')
 
 def output_markdown_table(stream, header, rows):
     # Header
