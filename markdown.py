@@ -185,7 +185,7 @@ def output_markdown(doc, stream):
         for openvpn_server in openvpn_servers:
             stream.write("### {}\n".format(format_markdown_cell(openvpn_server['description'])))
             output_markdown_table(stream, ('Option', 'Value'), openvpn_server.items())
-        stream.write("\n")
+            stream.write("\n")
 
     if hasattr_r(doc.pfsense, 'openvpn.openvpn_client'):
         stream.write("## OpenVPN clients\n")
@@ -195,7 +195,7 @@ def output_markdown(doc, stream):
         for openvpn_client in openvpn_clients:
             stream.write("### {}\n".format(format_markdown_cell(openvpn_client['description'])))
             output_markdown_table(stream, ('Option', 'Value'), openvpn_client.items())
-        stream.write("\n")
+            stream.write("\n")
 
     if hasattr_r(doc.pfsense, 'syslog'):
         stream.write("## Syslog configuration\n")
