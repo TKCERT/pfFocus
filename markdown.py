@@ -42,7 +42,10 @@ def format_markdown_cell(cell):
     elif isinstance(cell, PfSenseRuleInterface):
         cell = format_rule_interface(cell.data)
     elif isinstance(cell, PfSenseRuleLocation):
-        data = ''
+        if hasattr(cell, 'not'):
+            data = '**!** '
+        else:
+            data = ''
         if hasattr(cell, 'any'):
             data += 'any'
         elif hasattr(cell, 'address'):
