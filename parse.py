@@ -58,7 +58,7 @@ class PfSenseContentHandler(ContentHandler):
         old, _, _, _ = self.stack[-1]
 
         if cur_type == 'element':
-            elements = getattr(old, cur_name, DataList())
+            elements = getattr(old, attr_name, DataList())
             elements.append(cur)
             setattr(old, attr_name, elements)
 
