@@ -248,6 +248,50 @@ class PfSenseDnsMasq(PfSenseNode):
     _hosts = [PfSenseDnsMasqHost]
     _domainoverrides = [PfSenseDnsMasqDomainOverride]
 
+class PfSenseOpenVpnClient(PfSenseNode):
+    _vpnid = PfSenseInteger
+    _auth_user = PfSenseString
+    _mode = PfSenseString
+    _protocol = PfSenseString
+    _dev_mode = PfSenseString
+    _interface = PfSenseRuleInterface
+    _ipaddr = PfSenseString
+    _local_port = PfSenseInteger
+    _server_addr = PfSenseString
+    _server_port = PfSenseInteger
+    _crypto = PfSenseString
+    _digest = PfSenseString
+    _tunnel_network = PfSenseString
+    _remote_network = PfSenseString
+    _local_network = PfSenseString
+    _topology = PfSenseString
+    _description = PfSenseString
+    _custom_options = PfSenseString
+
+class PfSenseOpenVpnServer(PfSenseNode):
+    _vpnid = PfSenseInteger
+    _mode = PfSenseString
+    _authmode = PfSenseString
+    _protocol = PfSenseString
+    _dev_mode = PfSenseString
+    _interface = PfSenseRuleInterface
+    _ipaddr = PfSenseString
+    _local_port = PfSenseInteger
+    _crypto = PfSenseString
+    _digest = PfSenseString
+    _tunnel_network = PfSenseString
+    _remote_network = PfSenseString
+    _local_network = PfSenseString
+    _dynamic_ip = PfSenseString
+    _pool_enable = PfSenseString
+    _topology = PfSenseString
+    _description = PfSenseString
+    _custom_options = PfSenseString
+
+class PfSenseOpenVpn(PfSenseNode):
+    _openvpn_server = [PfSenseOpenVpnServer]
+    _openvpn_client = [PfSenseOpenVpnClient]
+
 class PfSenseRoute(PfSenseNode):
     _network = PfSenseString
     _gateway = PfSenseString
@@ -331,6 +375,7 @@ class PfSenseConfig(PfSenseNode):
     _filter = PfSenseFilter
     _dnsmasq = PfSenseDnsMasq
     _dhcpd = PfSenseDhcpd
+    _openvpn = PfSenseOpenVpn
     _syslog = PfSenseSyslog
     _sysctl = PfSenseSysCtl
 

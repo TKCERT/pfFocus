@@ -177,6 +177,26 @@ def output_markdown(doc, stream):
             output_markdown_table(stream, ('Domain', 'IP', 'Description'), domains)
             stream.write("\n")
 
+    if hasattr_r(doc.pfsense, 'openvpn.openvpn_server'):
+        stream.write("## OpenVPN servers\n")
+        openvpn_servers = [obj_to_dict(openvpn_server, ('vpnid', 'mode', 'authmode', 'protocol', 'dev_mode', 'interface', 'ipaddr', 'local_port',
+                                                        'crypto', 'digest', 'tunnel_network', 'remote_network', 'local_network', 'dynamic_ip', 'pool_enable',
+                                                        'topology', 'description', 'custom_options')) for openvpn_server in doc.pfsense.openvpn.openvpn_server]
+        for openvpn_server in openvpn_servers:
+            stream.write("### {}\n".format(format_markdown_cell(openvpn_server['description'])))
+            output_markdown_table(stream, ('Option', 'Value'), openvpn_server.items())
+        stream.write("\n")
+
+    if hasattr_r(doc.pfsense, 'openvpn.openvpn_client'):
+        stream.write("## OpenVPN clients\n")
+        openvpn_clients = [obj_to_dict(openvpn_client, ('vpnid', 'auth_user', 'mode', 'protocol', 'dev_mode', 'interface', 'ipaddr', 'local_port',
+                                                        'server_addr', 'server_port', 'crypto', 'digest', 'tunnel_network', 'remote_network', 'local_network',
+                                                        'topology', 'description', 'custom_options')) for openvpn_client in doc.pfsense.openvpn.openvpn_client]
+        for openvpn_client in openvpn_clients:
+            stream.write("### {}\n".format(format_markdown_cell(openvpn_client['description'])))
+            output_markdown_table(stream, ('Option', 'Value'), openvpn_client.items())
+        stream.write("\n")
+
     if hasattr_r(doc.pfsense, 'syslog'):
         stream.write("## Syslog configuration\n")
         syslog = obj_to_dict(doc.pfsense.syslog, ('enable', 'logall', 'nentries', 'remoteserver', 'remoteserver2', 'remoteserver3', 'sourceip', 'ipproto'))
