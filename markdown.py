@@ -119,8 +119,11 @@ def output_markdown(doc, stream):
         for dhcpd_interface_name in sorted(doc.pfsense.dhcpd.data.keys()):
             dhcpd_interface = PfSenseRuleInterface(parent=doc.pfsense.dhcpd)
             dhcpd_interface.string = dhcpd_interface_name
-            stream.write("### {}\n".format(format_markdown_cell(dhcpd_interface)))
+            stream.write("### DHCPd configuration for {}\n".format(format_markdown_cell(dhcpd_interface)))
             dhcpd = getattr(doc.pfsense.dhcpd, dhcpd_interface_name)
+            dhcpd_dict = obj_to_dict(dhcpd, ('enable', 'defaultleasetime', 'maxleasetime'))
+            output_markdown_table(stream, ('Option', 'Value'), dhcpd_dict.items())
+            stream.write("\n")
             if hasattr_r(dhcpd, 'range'):
                 stream.write("#### Ranges\n")
                 ranges = [obj_to_list(range, ('from', 'to')) for range in dhcpd.range]

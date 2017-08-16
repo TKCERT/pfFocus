@@ -98,6 +98,9 @@ class PfSenseStaticMap(PfSenseNode):
 class PfSenseDhcpdItem(PfSenseNode):
     _range = [PfSenseRange]
     _staticmap = [PfSenseStaticMap]
+    _defaultleasetime = PfSenseInteger
+    _maxleasetime = PfSenseInteger
+    _enable = PfSenseFlag
 
 class PfSenseDhcpd(PfSenseInterfacesNode):
     _wan = PfSenseDhcpdItem
