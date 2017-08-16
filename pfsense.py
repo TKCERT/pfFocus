@@ -345,6 +345,7 @@ class PfSenseInterfaces(PfSenseInterfacesNode):
 
 class PfSenseSyslog(PfSenseNode):
     _nentries = PfSenseInteger
+    _logfilesize = PfSenseInteger
     _remoteserver = PfSenseString
     _remoteserver2 = PfSenseString
     _remoteserver3 = PfSenseString

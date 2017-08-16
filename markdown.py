@@ -199,7 +199,7 @@ def output_markdown(doc, stream):
 
     if hasattr_r(doc.pfsense, 'syslog'):
         stream.write("## Syslog configuration\n")
-        syslog = obj_to_dict(doc.pfsense.syslog, ('enable', 'logall', 'nentries', 'remoteserver', 'remoteserver2', 'remoteserver3', 'sourceip', 'ipproto'))
+        syslog = obj_to_dict(doc.pfsense.syslog, ('enable', 'logall', 'logfilesize', 'nentries', 'remoteserver', 'remoteserver2', 'remoteserver3', 'sourceip', 'ipproto'))
         output_markdown_table(stream, ('Option', 'Value'), syslog.items())
         stream.write("\n")
 
