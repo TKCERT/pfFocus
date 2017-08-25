@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import re
 from datetime import datetime, timezone
 from pprint import pformat
 
@@ -74,6 +75,23 @@ class PfSenseFlag(PfSenseNode):
     def data(self):
         return True
 
+class PfSenseAliasString(PfSenseString):
+    @property
+    def data(self):
+        data = super().data
+        for alias in self.rootdoc.pfsense.aliases.alias:
+            if alias.name.string == data:
+                return {'alias': alias.data}
+        return data
+
+class PfSensePortString(PfSenseAliasString):
+    PORT_STRING = re.compile(r'(\d+((:|-)(\d+))?|[a-zA-Z0-9_]+)')
+
+    def __call__(self, content):
+        super().__call__(content)
+        if self.PORT_STRING.fullmatch(self.string) is None:
+            raise RuntimeError("Invalid port string: {}".format(self.string))
+
 class PfSenseChange(PfSenseNode):
     _time = PfSenseTimestamp
     _username = PfSenseString
@@ -144,7 +162,7 @@ class PfSenseRuleLocation(PfSenseNode):
     _any = PfSenseNode
     _network = PfSenseRuleAlias
     _address = PfSenseRuleAlias
-    _port = PfSenseString
+    _port = PfSensePortString
     _not = PfSenseFlag
 
 class PfSenseFilterRule(PfSenseNode):
@@ -177,13 +195,13 @@ class PfSenseFilter(PfSenseNode):
 class PfSenseNatOutboundRule(PfSenseNode):
     _interface = PfSenseRuleInterface
     _source = PfSenseRuleLocation
-    _dstport = PfSenseInteger
+    _dstport = PfSensePortString
     _target = PfSenseString
     _targetip = PfSenseString
     _targetip_subnet = PfSenseString
     _destination = PfSenseRuleLocation
-    _natport = PfSenseInteger
-    _staticnatport = PfSenseInteger
+    _natport = PfSensePortString
+    _staticnatport = PfSensePortString
     _descr = PfSenseString
     _created = PfSenseChange
     _updated = PfSenseChange
