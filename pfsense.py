@@ -145,6 +145,8 @@ class PfSenseRuleInterface(PfSenseString):
     @property
     def data(self):
         data = super().data
+        if data is None:
+            return data
         data_list = []
         for iface_name in data.split(','):
             found = False
