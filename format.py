@@ -5,6 +5,7 @@ import sys
 import yaml
 
 from markdown import output_markdown
+from bbcode import output_bbcode
 from parse import parse_pfsense
 from pfsense import PfSenseDocument
 from progress import Animation
@@ -16,6 +17,7 @@ def output_yaml(doc, stream):
 OUTPUT_FORMATS = {
     'yaml': output_yaml,
     'md': output_markdown,
+    'bbcode': output_bbcode,
 }
 
 def get_output_func(args):
