@@ -218,7 +218,7 @@ class PfSenseNatRule(PfSenseNode):
     _destination = PfSenseRuleLocation
     _protocol = PfSenseString
     _target = PfSenseRuleAlias
-    _local_port = PfSenseInteger
+    _local_port = PfSensePortString
     _interface = PfSenseRuleInterface
     _descr = PfSenseString
     _associated_rule_id = PfSenseString
