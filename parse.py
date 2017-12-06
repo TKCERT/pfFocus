@@ -22,24 +22,24 @@ class PfSenseContentHandler(ContentHandler):
 
     def startElement(self, name, attrs):
         attr_name = name.replace('-', '_')
-        cur, _, _, _ = self.stack[-1]
+        top, _, _, _ = self.stack[-1]
 
         klass = None
         klass_type = 'unknown'
         klass_lookup = '_%s' % attr_name
-        klass = getattr(cur, klass_lookup, None)
+        klass = getattr(top, klass_lookup, None)
         if isinstance(klass, list):
             klass = klass[0]
             klass_type = 'element'
         elif not klass is None:
             klass_type = 'attribute'
         if not klass is None:
-            new = klass(cur)
+            cur = klass(top)
         else:
-            new = None
+            cur = None
 
         stack_chars = io.StringIO()
-        stack_frame = (new, name, klass_type, stack_chars)
+        stack_frame = (cur, name, klass_type, stack_chars)
         self.stack.append(stack_frame)
 
     def characters(self, content):
@@ -50,20 +50,20 @@ class PfSenseContentHandler(ContentHandler):
                 cur(stack_chars.getvalue())
 
     def endElement(self, name):
-        if name != self.stack[-1][1]:
+        cur, cur_name, cur_type, _ = self.stack.pop()
+        if name != cur_name:
             raise RuntimeError("Invalid stack order")
 
         attr_name = name.replace('-', '_')
-        cur, cur_name, cur_type, _ = self.stack.pop()
-        old, _, _, _ = self.stack[-1]
+        top, _, _, _ = self.stack[-1]
 
         if cur_type == 'element':
-            elements = getattr(old, attr_name, DataList())
+            elements = getattr(top, attr_name, DataList())
             elements.append(cur)
-            setattr(old, attr_name, elements)
+            setattr(top, attr_name, elements)
 
         elif cur_type == 'attribute':
-            setattr(old, attr_name, cur)
+            setattr(top, attr_name, cur)
 
     def endDocument(self):
         if self.stack[-1][0] != self.document:
