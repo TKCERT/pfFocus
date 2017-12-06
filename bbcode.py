@@ -4,10 +4,10 @@ from util import dict_to_list, obj_to_dict, obj_to_list, hasattr_r
 
 
 def size(s, size):
-    return "[size=%s]%s[/size]" % (size, s)
+    return "[size={size}]{s}[/size]".format(size=size, s=s)
 
 def bold(s):
-    return "[b]%s[/b]" % s
+    return "[b]{s}[/b]".format(s=s)
 
 def xlarge(s):
     return size(s, 'x-large')
@@ -77,7 +77,6 @@ def format_bbcode_cell(cell):
             data += ':'
             data += str(cell.port)
         cell = data
-
     return str(cell).replace('[', '{').replace(']', '}').replace('\n', '  ')
 
 def output_bbcode_table(stream, header, rows):
