@@ -3,7 +3,7 @@ import re
 from datetime import datetime, timezone
 from pprint import pformat
 
-from util import DataNode
+from util import DataNode, hasattr_r
 
 
 class PfSenseNode(DataNode):
@@ -79,9 +79,10 @@ class PfSenseAliasString(PfSenseString):
     @property
     def data(self):
         data = super().data
-        for alias in self.rootdoc.pfsense.aliases.alias:
-            if alias.name.string == data:
-                return {'alias': alias.data}
+        if hasattr_r(self.rootdoc.pfsense, 'aliases'):
+            for alias in self.rootdoc.pfsense.aliases.alias:
+                if alias.name.string == data:
+                    return {'alias': alias.data}
         return data
 
 class PfSensePortString(PfSenseAliasString):
@@ -136,9 +137,10 @@ class PfSenseRuleAlias(PfSenseString):
             if interface_name == alias_name:
                 interface_data['name'] = data
                 return {'interface': interface_data}
-        for alias in self.rootdoc.pfsense.aliases.alias:
-            if alias.name.string == data:
-                return {'alias': alias.data}
+        if hasattr_r(self.rootdoc.pfsense, 'aliases'):
+            for alias in self.rootdoc.pfsense.aliases.alias:
+                if alias.name.string == data:
+                    return {'alias': alias.data}
         return data
 
 class PfSenseRuleInterface(PfSenseString):
