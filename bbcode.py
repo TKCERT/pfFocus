@@ -229,6 +229,12 @@ def output_bbcode(doc, stream):
             output_bbcode_table(stream, ('Option', 'Value'), openvpn_client.items())
             stream.write("\n")
 
+    if hasattr_r(doc.pfsense, 'openvpn.openvpn_csc'):
+        stream.write(h2("OpenVPN client specific overrides\n"))
+        cscs = [obj_to_list(csc, ('server_list', 'common_name', 'description', 'tunnel_network')) for csc in doc.pfsense.openvpn.openvpn_csc]
+        output_bbcode_table(stream, ('VPN IDs', 'Common Name', 'Description', 'Tunnel Network'), cscs)
+        stream.write("\n")
+
     if hasattr_r(doc.pfsense, 'syslog'):
         stream.write(h2("Syslog configuration\n"))
         syslog = obj_to_dict(doc.pfsense.syslog, ('enable', 'logall', 'logfilesize', 'nentries', 'remoteserver', 'remoteserver2', 'remoteserver3', 'sourceip', 'ipproto'))

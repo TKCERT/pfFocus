@@ -200,6 +200,12 @@ def output_markdown(doc, stream):
             output_markdown_table(stream, ('Option', 'Value'), openvpn_client.items())
             stream.write("\n")
 
+    if hasattr_r(doc.pfsense, 'openvpn.openvpn_csc'):
+        stream.write("## OpenVPN client specific overrides\n")
+        cscs = [obj_to_list(csc, ('server_list', 'common_name', 'description', 'tunnel_network')) for csc in doc.pfsense.openvpn.openvpn_csc]
+        output_markdown_table(stream, ('VPN IDs', 'Common Name', 'Description', 'Tunnel Network'), cscs)
+        stream.write("\n")
+
     if hasattr_r(doc.pfsense, 'syslog'):
         stream.write("## Syslog configuration\n")
         syslog = obj_to_dict(doc.pfsense.syslog, ('enable', 'logall', 'logfilesize', 'nentries', 'remoteserver', 'remoteserver2', 'remoteserver3', 'sourceip', 'ipproto'))

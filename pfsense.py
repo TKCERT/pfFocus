@@ -313,9 +313,16 @@ class PfSenseOpenVpnServer(PfSenseNode):
     _description = PfSenseString
     _custom_options = PfSenseString
 
+class PfSenseOpenVpnCsc(PfSenseNode):
+    _server_list = PfSenseString
+    _common_name = PfSenseString
+    _description = PfSenseString
+    _tunnel_network = PfSenseString
+
 class PfSenseOpenVpn(PfSenseNode):
     _openvpn_server = [PfSenseOpenVpnServer]
     _openvpn_client = [PfSenseOpenVpnClient]
+    _openvpn_csc = [PfSenseOpenVpnCsc]
 
 class PfSenseRoute(PfSenseNode):
     _network = PfSenseString
