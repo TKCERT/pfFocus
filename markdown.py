@@ -65,7 +65,7 @@ def output_markdown_table(stream, header, rows):
     stream.write(" |\n")
     # Seperator
     stream.write("| ")
-    stream.write(" | ".join(map(lambda x: '-'*len(x), header)))
+    stream.write(" | ".join(map(lambda x: '-'*max(len(x),3), header)))
     stream.write(" |\n")
     # Rows
     for row in rows:
