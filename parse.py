@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import io
+import sys
 from pprint import pprint
 from xml.sax import ContentHandler
 
@@ -71,8 +72,12 @@ class PfSenseContentHandler(ContentHandler):
 
 def parse_pfsense(input_path, document):
     handler = PfSenseContentHandler(document)
-    with open(input_path, 'rb') as input_file:
-        parse(input_file, handler)
+    if input_path == '-':
+        with sys.stdin as input_file:
+            parse(input_file, handler)
+    else:
+        with open(input_path, 'rb') as input_file:
+            parse(input_file, handler)
 
 def parse_args():
     parser = argparse.ArgumentParser()
