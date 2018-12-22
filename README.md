@@ -12,6 +12,10 @@ This simple tool allows you to convert a full configuration backup of a *pf*Sens
     * defusedxml==0.5.0
     * PyYAML==3.12
 
+or
+
+* Docker
+
 ## Screenshots
 
 **Before:** Configuration backup as XML
@@ -58,6 +62,28 @@ parse.py [-h] input_path
 Examples:
 ```
 ./parse.py config-backup.xml
+```
+
+### Usage with Docker
+
+When using pfFocus via Docker, you don't need to download it from Github, and you don't need to install Python or any libraries. Only Docker is required.
+
+It runs this command inside Docker: `./format.py -q -f md -i - -o -`, which means it works with `STDIN` and `STDOUT` instead of files.
+
+```bash
+docker run --rm -i hugojosefson/pffocus < input.xml > output.md
+```
+
+If you want you can set up an alias for it in bash:
+
+```bash
+alias pffocus="docker run --rm -i hugojosefson/pffocus"
+```
+
+Then you can use it like a normal Unix command, with pipes and redirects:
+
+```bash
+pffocus < input.xml > output.md
 ```
 
 ## Roadmap
