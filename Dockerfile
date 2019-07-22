@@ -1,4 +1,4 @@
-FROM python:3.5
+FROM python:3
 
 RUN mkdir /app
 WORKDIR /app
@@ -6,5 +6,8 @@ WORKDIR /app
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
-COPY *.py ./
-CMD ./format.py -q -f md -i - -o -
+ADD ./ ./
+RUN pip install ./
+
+ENTRYPOINT ["/usr/local/bin/pfFocus-format"]
+CMD ["-q", "-f", "md", "-i", "-", "-o", "-"]

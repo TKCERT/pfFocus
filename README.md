@@ -43,32 +43,32 @@ pfFocus currently supports the following configuration sections:
 
 ## Usage
 
-Main formatting tool: ```format.py```
+Main formatting tool: ```pf-format```
 ```
-format.py
-```
-
-Examples:
-```
-./format.py -i config-backup.xml -f md -o test.md
-./format.py -i config-backup.xml -f yaml -o test.yaml
-```
-
-Test parsing tool: ```parse.py```
-```
-parse.py [-h] input_path
+pf-format
 ```
 
 Examples:
 ```
-./parse.py config-backup.xml
+pf-format -i config-backup.xml -f md -o test.md
+pf-format -i config-backup.xml -f yaml -o test.yaml
+```
+
+Test parsing tool: ```pf-parse```
+```
+pf-parse [-h] input_path
+```
+
+Examples:
+```
+pf-parse config-backup.xml
 ```
 
 ### Usage with Docker
 
 When using pfFocus via Docker, you don't need to download it from Github, and you don't need to install Python or any libraries. Only Docker is required.
 
-It runs this command inside Docker: `./format.py -q -f md -i - -o -`, which means it works with `STDIN` and `STDOUT` instead of files.
+It runs this command inside Docker: `pf-format -q -f md -i - -o -`, which means it works with `STDIN` and `STDOUT` instead of files.
 
 ```bash
 docker run --rm -i hugojosefson/pffocus < input.xml > output.md

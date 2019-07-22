@@ -7,8 +7,8 @@ from xml.sax import ContentHandler
 
 from defusedxml.sax import parse
 
-from pfsense import PfSenseDocument
-from util import DataList
+from pf_focus.pfsense import PfSenseDocument
+from pf_focus.util import DataList
 
 
 class PfSenseContentHandler(ContentHandler):

@@ -4,11 +4,11 @@ import sys
 
 import yaml
 
-from markdown import output_markdown
-from bbcode import output_bbcode
-from parse import parse_pfsense
-from pfsense import PfSenseDocument
-from progress import Animation
+from pf_focus.markdown import output_markdown
+from pf_focus.bbcode import output_bbcode
+from pf_focus.parse import parse_pfsense
+from pf_focus.pfsense import PfSenseDocument
+from pf_focus.progress import Animation
 
 
 def output_yaml(doc, stream):

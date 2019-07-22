@@ -12,13 +12,13 @@ yaml: $(OUT_YAML)
 bbcode: $(OUT_BBCODE)
 
 %.md: %.xml
-	coverage run ../format.py -i $< -f md -o $@
+	PYTHONPATH=../ coverage run ../pf_focus/format.py -i $< -f md -o $@
 	coverage report -m
 
 %.yaml: %.xml
-	coverage run ../format.py -i $< -f yaml -o $@
+	PYTHONPATH=../ coverage run ../pf_focus/format.py -i $< -f yaml -o $@
 	coverage report -m
 
 %.bbcode: %.xml
-	coverage run ../format.py -i $< -f bbcode -o $@
+	PYTHONPATH=../ coverage run ../pf_focus/format.py -i $< -f bbcode -o $@
 	coverage report -m

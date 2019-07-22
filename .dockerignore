@@ -1,0 +1,11 @@
+__pycache__
+.coverage
+.vscode
+test.*
+
+.git
+.dockerignore
+Dockerfile
+
+logos
+screenshots
