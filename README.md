@@ -41,6 +41,16 @@ pfFocus currently supports the following configuration sections:
 * OpenVPN server and client configurations
 * Syslog and sysctl configuration
 
+## Install (Windows WSL Ubuntu)
+```
+git clone https://github.com/TKCERT/pfFocus.git
+apt update
+apt install python3-pip -y
+cd pfFocus/
+pip3 install -r requirements.txt
+pip3 install ./
+done!
+```
 ## Usage
 
 Main formatting tool: ```pf-format```
