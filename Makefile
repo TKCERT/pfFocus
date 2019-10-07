@@ -4,7 +4,7 @@ Pipfile.lock: Pipfile
 	pipenv lock --pre
 
 requirements.txt: Pipfile Pipfile.lock
-	pipenv lock --pre --requirements | grep -v "^-i" > requirements.txt
+	pipenv lock --pre --requirements | grep -v "^\." | grep -v "^-i" > requirements.txt
 
 tests/requirements.txt: Pipfile Pipfile.lock
 	pipenv lock --pre --dev --requirements > tests/requirements.txt
