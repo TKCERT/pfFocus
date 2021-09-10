@@ -11,11 +11,12 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     strategy:
+      fail-fast: false
       matrix:
         os: [ ubuntu-latest, macos-latest ]
-        python-version: [ '3.5', '3.6', '3.7', '3.8', '3.9', 'pypy-3.6', 'pypy-3.7' ]
+        python-version: [ '3.6', '3.7', '3.8', '3.9', 'pypy-3.6', 'pypy-3.7' ]
 
-    name: Python ${{ matrix.python-version }}
+    name: Python ${{ matrix.python-version }}@${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
