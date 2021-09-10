@@ -1,0 +1,17 @@
+name: Docker
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    name: Docker Container Image
+    steps:
+      - uses: actions/checkout@v2
+      - uses: mback2k/action-docker-package@master
+        with:
+          registry_username: ${{ github.repository_owner }}
+          registry_password: ${{ secrets.GITHUB_TOKEN }}
