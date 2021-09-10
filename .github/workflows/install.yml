@@ -1,0 +1,25 @@
+name: Install
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, macos-latest ]
+        python-version: [ '3.6', '3.7', '3.8', '3.9', 'pypy-3.6', 'pypy-3.7' ]
+
+    name: Python ${{ matrix.python-version }}@${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: x64
+
+      - run: pip install git+https://github.com/TKCERT/pfFocus.git#egg=pfFocus
