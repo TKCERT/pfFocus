@@ -109,6 +109,7 @@ def output_bbcode(doc, stream):
 
     stream.write(h2("System\n"))
     info = obj_to_dict(doc.pfsense.system, ('hostname', 'domain', 'timeservers', 'timezone', 'language', 'dnsserver'))
+    info['dnsserver'] = ', '.join(info['dnsserver'])
     output_bbcode_table(stream, ('Option', 'Value'), info.items())
     stream.write("\n")
 

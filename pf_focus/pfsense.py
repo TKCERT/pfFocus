@@ -393,7 +393,7 @@ class PfSenseSystem(PfSenseNode):
     _timeservers = PfSenseString
     _timezone = PfSenseString
     _language = PfSenseString
-    _dnsserver = PfSenseString
+    _dnsserver = [PfSenseString]
 
 class PfSenseConfig(PfSenseNode):
     _version = PfSenseString

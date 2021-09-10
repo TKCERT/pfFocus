@@ -80,6 +80,7 @@ def output_markdown(doc, stream):
 
     stream.write("## System\n")
     info = obj_to_dict(doc.pfsense.system, ('hostname', 'domain', 'timeservers', 'timezone', 'language', 'dnsserver'))
+    info['dnsserver'] = ', '.join(map(format_markdown_cell, info['dnsserver']))
     output_markdown_table(stream, ('Option', 'Value'), info.items())
     stream.write("\n")
 
