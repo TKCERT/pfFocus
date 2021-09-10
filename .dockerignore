@@ -1,6 +1,7 @@
 __pycache__
 .coverage
 .vscode
+*.egg-info
 test.*
 
 .git

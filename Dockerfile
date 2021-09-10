@@ -1,13 +1,10 @@
-FROM python:3
+FROM python:3-alpine
 
-RUN mkdir /app
+COPY ./ /app
 WORKDIR /app
 
-COPY requirements.txt ./
-RUN pip install -r requirements.txt
-
-ADD ./ ./
-RUN pip install ./
+RUN pip install -r /app/requirements.txt
+RUN pip install /app
 
 ENTRYPOINT ["/usr/local/bin/pfFocus-format"]
 CMD ["-q", "-f", "md", "-i", "-", "-o", "-"]

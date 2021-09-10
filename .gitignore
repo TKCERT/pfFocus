@@ -1,5 +1,5 @@
 __pycache__
 .coverage
 .vscode
-*\.egg-info
+*.egg-info
 test.*
