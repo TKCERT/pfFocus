@@ -2,19 +2,16 @@
 
 # pfFocus
 
-[![Build Status](https://travis-ci.org/TKCERT/pfFocus.svg?branch=master)](https://travis-ci.org/TKCERT/pfFocus)
+[![Check](https://github.com/TKCERT/pfFocus/actions/workflows/check.yml/badge.svg)](https://github.com/TKCERT/pfFocus/actions/workflows/check.yml)
+[![Docker](https://github.com/TKCERT/pfFocus/actions/workflows/docker.yml/badge.svg)](https://github.com/TKCERT/pfFocus/actions/workflows/docker.yml)
 
 This simple tool allows you to convert a full configuration backup of a *pf*Sense firewall into some meaningful output format, like Markdown or YAML. It enables you to **focus** on the important parts of your firewall configuration and allows you to get a quick overview of the most important settings.
 
 ## Requirements
 
-* Python 3.5+
+* Python 3.6+
     * defusedxml==0.5.0
-    * PyYAML==3.12
-
-or
-
-* Docker
+    * PyYAML==5.4
 
 ## Screenshots
 
@@ -64,26 +61,26 @@ Examples:
 pf-parse config-backup.xml
 ```
 
-### Usage with Docker
+### Usage via Docker
 
 When using pfFocus via Docker, you don't need to download it from Github, and you don't need to install Python or any libraries. Only Docker is required.
 
 It runs this command inside Docker: `pf-format -q -f md -i - -o -`, which means it works with `STDIN` and `STDOUT` instead of files.
 
 ```bash
-docker run --rm -i hugojosefson/pffocus < input.xml > output.md
+docker run --rm -i ghcr.io/tkcert/pffocus < input.xml > output.md
 ```
 
 If you want you can set up an alias for it in bash:
 
 ```bash
-alias pffocus="docker run --rm -i hugojosefson/pffocus"
+alias pf-format="docker run --rm -i ghcr.io/tkcert/pffocus"
 ```
 
 Then you can use it like a normal Unix command, with pipes and redirects:
 
 ```bash
-pffocus < input.xml > output.md
+pf-format < input.xml > output.md
 ```
 
 ## Roadmap
