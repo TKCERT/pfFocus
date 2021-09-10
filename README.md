@@ -38,26 +38,35 @@ pfFocus currently supports the following configuration sections:
 * OpenVPN server and client configurations
 * Syslog and sysctl configuration
 
+## Installation
+
+Install into existing Python environment:
+```bash
+pip install git+https://github.com/TKCERT/pfFocus.git#egg=pfFocus
+```
+
+Combine this with `--user` or `pipx` or `pipenv` for isolated installation.
+
 ## Usage
 
 Main formatting tool: ```pf-format```
-```
+```bash
 pf-format
 ```
 
 Examples:
-```
+```bash
 pf-format -i config-backup.xml -f md -o test.md
 pf-format -i config-backup.xml -f yaml -o test.yaml
 ```
 
 Test parsing tool: ```pf-parse```
-```
+```bash
 pf-parse [-h] input_path
 ```
 
 Examples:
-```
+```bash
 pf-parse config-backup.xml
 ```
 
@@ -65,7 +74,7 @@ pf-parse config-backup.xml
 
 When using pfFocus via Docker, you don't need to download it from Github, and you don't need to install Python or any libraries. Only Docker is required.
 
-It runs this command inside Docker: `pf-format -q -f md -i - -o -`, which means it works with `STDIN` and `STDOUT` instead of files.
+It runs this command inside Docker: `pfFocus-format -q -f md -i - -o -`, which means it works with `STDIN` and `STDOUT` instead of files.
 
 ```bash
 docker run --rm -i ghcr.io/tkcert/pffocus < input.xml > output.md
