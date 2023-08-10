@@ -1,9 +1,16 @@
--i https://pypi.org/simple/
-astroid==2.3.3
-coverage==4.5.4
-isort==4.3.21
-lazy-object-proxy==1.4.3
-mccabe==0.6.1
-pylint==2.4.2
-six==1.15.0
-wrapt==1.11.2
+-i https://pypi.org/simple
+astroid==2.15.6; python_full_version >= '3.7.2'
+coverage==7.2.7
+dill==0.3.7; python_version < '3.11'
+isort==5.12.0; python_full_version >= '3.8.0'
+lazy-object-proxy==1.9.0; python_version >= '3.7'
+mccabe==0.7.0; python_version >= '3.6'
+platformdirs==3.10.0; python_version >= '3.7'
+pylint==2.17.5
+tomli==2.0.1; python_version < '3.11'
+tomlkit==0.12.1; python_version >= '3.7'
+typing-extensions==4.7.1; python_version < '3.11'
+wrapt==1.15.0; python_version < '3.11'
+defusedxml==0.7.1
+.
+pyyaml==6.0.1
