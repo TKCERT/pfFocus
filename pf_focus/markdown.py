@@ -84,6 +84,18 @@ def output_markdown(doc, stream):
     output_markdown_table(stream, ('Option', 'Value'), info.items())
     stream.write("\n")
 
+    stream.write("### Groups\n")
+    groups = sorted(doc.pfsense.system.group.data, key=lambda group: group['gid'])
+    groups = [dict_to_list(group, ('name', 'gid', 'description', 'member')) for group in groups]
+    output_markdown_table(stream, ('Name', 'Group ID', 'Description', 'Members #'), groups)
+    stream.write("\n")
+
+    stream.write("### Users\n")
+    users = sorted(doc.pfsense.system.user.data, key=lambda user: user['uid'])
+    users = [dict_to_list(user, ('name', 'uid', 'descr', 'scope', 'groupname')) for user in users]
+    output_markdown_table(stream, ('Name', 'User ID', 'Description', 'Scope', 'Group'), users)
+    stream.write("\n")
+
     if hasattr_r(doc.pfsense, 'interfaces'):
         stream.write("## Interfaces\n")
         interfaces = sorted(doc.pfsense.interfaces.data.items(), key=lambda interface: interface[0])
