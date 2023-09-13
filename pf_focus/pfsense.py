@@ -386,6 +386,20 @@ class PfSenseSyslog(PfSenseNode):
     _logall = PfSenseFlag
     _enable = PfSenseFlag
 
+class PfSenseUser(PfSenseNode):
+    _name = PfSenseString
+    _descr = PfSenseString
+    _scope = PfSenseString
+    _groupname = PfSenseString
+    _uid = PfSenseInteger
+    # _member = PfSenseString
+
+class PfSenseGroup(PfSenseNode):
+    _name = PfSenseString
+    _gid = PfSenseInteger
+    _description = PfSenseString
+    _member = PfSenseString
+
 class PfSenseSystem(PfSenseNode):
     _optimization = PfSenseString
     _hostname = PfSenseString
@@ -394,6 +408,8 @@ class PfSenseSystem(PfSenseNode):
     _timezone = PfSenseString
     _language = PfSenseString
     _dnsserver = [PfSenseString]
+    _group = [PfSenseGroup]
+    _user = [PfSenseUser]
 
 class PfSenseConfig(PfSenseNode):
     _version = PfSenseString
